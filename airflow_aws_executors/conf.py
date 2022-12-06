@@ -44,6 +44,20 @@ if conf.has_option('batch', 'region'):
         }
     }
 
+'''
+networkConfiguration={
+        'awsvpcConfiguration': {
+            'subnets': [
+                'string',
+            ],
+            'securityGroups': [
+                'string',
+            ],
+            'assignPublicIp': 'ENABLED'|'DISABLED'
+        }
+    },
+'''
+
 
 ECS_FARGATE_RUN_TASK_KWARGS = {}
 if conf.has_option('ecs_fargate', 'region'):
@@ -51,7 +65,18 @@ if conf.has_option('ecs_fargate', 'region'):
         'cluster': conf.get('ecs_fargate', 'cluster'),
         'taskDefinition': conf.get('ecs_fargate', 'task_definition'),
         'platformVersion': 'LATEST',
-
+        'networkConfiguration': {
+        'awsvpcConfiguration': {
+                'subnets': [
+                    'subnet-0c565ff6127f7446b',
+                    'subnet-0c09dfb78b8032ccf'
+                ],
+                'securityGroups': [
+                    'sg-09f5332efd78b38dd',
+                ],
+                'assignPublicIp': 'DISABLED'
+            }
+        },
         'overrides': {
             'containerOverrides': [{
                 'name': conf.get('ecs_fargate', 'container_name'),
